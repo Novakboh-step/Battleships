@@ -121,7 +121,6 @@ class Model:
             9 : "J",
         }
         a = 0
-        # print(self.AI)
         for i in range(10):
             b = 0
             buttons = []
