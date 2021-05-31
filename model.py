@@ -11,7 +11,7 @@ class Model:
     def __init__(self):
         self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
         self.every_button = []
-        self.win_counter = 20
+        self.win_counter = 3
         self.controller = Controller(win_counter=self.win_counter)
         
 
@@ -33,7 +33,6 @@ class Model:
         :param ship: given ships name
         :param board: board of given player
         """
-        # w = 0
         while True:
             checkcoords = []
             x = random.randint(1, 10)
@@ -92,11 +91,6 @@ class Model:
         board.append(t)
         return board
 
-    # def get_buttons(self, root, font):
-    #     button_list = ["1 Player", "2 Players"]
-    #     for i, button in enumerate(button_list, start=2):
-    #         Button(root, width=7, height=1, text=button, font=font, fg="white", activebackground="gray19",
-    #             bg="gray19").grid(row=i, column=1)
 
     def board_buttons(self, root, player1, player2, font):
         """

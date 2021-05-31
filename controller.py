@@ -50,7 +50,7 @@ class Controller:
         print(f"Player {self.turn} turn")
 
         if player.hits == self.win_counter:
-            # if one player got 20 hits he won
+            # if current player got a number of hits that equals to the win_counter he won
             self.popupwindow(player.name + " has won!")
 
     def restart_program(self):

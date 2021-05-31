@@ -14,7 +14,6 @@ class View:
         self.model = Model()
         player1 = Player(name="player 1", model=self.model, id=1)
         player2 = Player(name="player 2", model=self.model, id=2)
-        self.info = "some text"
 
         # insert side labels
         self.side_labels()
@@ -37,13 +36,10 @@ class View:
         """
         Create Buttons and Labels for the field
         """
-        # info = StringVar()
         Label(self.root, text="BATTLESHIPS", fg="white", bg="gray19", font=self.font_big).grid(row=0, column=10, columnspan=9)
-        Label(self.root, textvariable=self.info, fg="white", bg="gray19", font=self.font1).grid(row=12, column=6, columnspan=18)
     
         for _ in range(10):
             Label(self.root, text="   ", bg="gray19").grid(row=_, column=0)
-        # self.model.get_buttons(root=self.root, font=self.font1)
         Label(self.root, text=f"Get {self.model.win_counter} hits to win", font=self.font_normal, fg="white", bg="gray19").grid(row=5, column=1)
     
         for _ in range(10):
