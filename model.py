@@ -1,7 +1,5 @@
 import random
-from controller import Controller
 from tkinter import *
-from functools import partial
 
 
 class Model:
@@ -11,10 +9,6 @@ class Model:
     def __init__(self):
         self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
         self.every_button = []
-        self.win_counter = 3
-        self.controller = Controller(win_counter=self.win_counter)
-        
-
 
     def place_all_ships(self,board):
         """
@@ -92,73 +86,8 @@ class Model:
         return board
 
 
-    def board_buttons(self, root, player1, player2, font):
-        """
-        create all buttons for one player
     
-        :param root: Tk root object
-        :param player1: Player 1 object
-        :param player2: Player 2 object
-        :param font: Tk font
-        """
-        allbuttons = []
-        letter_dict = {
-            0 : "A",
-            1 : "B",
-            2 : "C",
-            3 : "D",
-            4 : "E",
-            5 : "F",
-            6 : "G",
-            7 : "H",
-            8 : "I",
-            9 : "J",
-        }
-        a = 0
-        for i in range(10):
-            b = 0
-            buttons = []
-            for j in range(10):
-                txt = letter_dict[i]+str(j+1)
-                cmd = partial(self.controller.hit_or_miss, a, b, player1, allbuttons, player2)
-                button = Button(root, text=txt, width=2, height=1, font=font, bg="sky blue", activebackground="sky blue",
-                                command=cmd)
-                buttons.append(button)
-                b += 1
-            # create a 2 dimensional array with buttons representing the battle field
-            allbuttons.append(list(buttons))
-            a += 1
-        # store each button matrix in a list
-        self.every_button.append(allbuttons)
-        self.side(player1, allbuttons, root, font)
-
-    def side(self, player, allbuttons, root, font):
-        """
-        order the buttons of each player into a grid
-    
-        :param player: Player object
-        :param allbuttons: All buttons of this player
-        :param root: Tk root object
-        :param font: Tk font
-        """
-        col = 4 if player.name == "player 1" else 15
-
-
-        for row in range(10):
-            for column in range(10):
-                allbuttons[row][column].grid(row=1 + row, column=col + column)
-        if player.name == "player 1":
-            label2 = Label(root, text="Player 1", font=font, fg="white", bg="gray19")
-            label2.grid(row=11, column=4, columnspan=10)
-            label3 = Label(root, textvariable=player.score, font=font,fg="white", bg="gray19")
-            label3.grid(row=12, column=4, columnspan=10)
-        else:
-            label4 = Label(root, text="Player 2", font=font, fg="white", bg="gray19")
-            label4.grid(row=11, column=15, columnspan=10)
-            label5 = Label(root, textvariable=player.score, font=font,fg="white", bg="gray19")
-            label5.grid(row=12, column=15, columnspan=10)
-
-class Player:
+class Player():
     """
     Player object that stores information about each player
 

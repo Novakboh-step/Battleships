@@ -1,8 +1,7 @@
 from tkinter import *
 import random
-import os
-import sys
-import tkinter.messagebox as tkMessageBox
+from model import Model, Player
+import subprocess
 
 
 class Controller:
@@ -11,13 +10,17 @@ class Controller:
 
     :param win_counter : Decides number of hits to victory
     """
-    def __init__(self, win_counter : int = 20):
+    def __init__(self, win_counter : int = 3):
         self.turn = random.randint(1,2)
         self.win_counter = win_counter
-        print(f"Game begins, player {self.turn} starts")
+        self.turn_label_info = StringVar()
+        self.turn_label_info.set(f"Player turn: {self.turn}")
+        self.info = StringVar()
+        self.info.set(f"Game begins!")
+        self.model = Model()
 
 
-    def hit_or_miss(self, a, b, rival, all_buttons, player):
+    def hit_or_miss(self, a, b, rival, all_buttons, player, root):
         """
         check if there was a hit or a missed done by the player
     
@@ -30,12 +33,12 @@ class Controller:
 
         #In case the player that clicks is out of turn
         if player.id != self.turn:
-            print(f"Wait for your turn, {player.name}")
+            self.info.set(f"Wait for your turn, {player.name}")
             return
 
         if rival.board[a + 1][b + 1] == ': ':
             # if a ship was hit change the button and the players board
-            print("A hit, nice shot " + player.name + "!")
+            self.info.set(f"{player.name} hit!")
             rival.board[a + 1][b + 1] = 'X '
             all_buttons[a][b].configure(text="X", fg="black", bg="red3", activebackground="red3", state="disabled")
             # increase the hit counter and go again
@@ -43,32 +46,45 @@ class Controller:
             player.score.set(f"Score: {player.hits}")
             self.turn = player.id
         else:
-            print("Seems like you missed that one, " + player.name + "!")
+            self.info.set(f"{player.name} miss...")
             rival.board[a + 1][b + 1] = 'O '
             all_buttons[a][b].configure(text="O", fg="White", activeforeground="white", state="disabled")
             self.turn = rival.id
-        print(f"Player {self.turn} turn")
+            self.turn_label_info.set(f"Player turn: {self.turn}")
 
         if player.hits == self.win_counter:
             # if current player got a number of hits that equals to the win_counter he won
-            self.popupwindow(player.name + " has won!")
+            self.info.set(f"Game over, {player.name} won!")
+            self.disable_buttons(root)
 
     def restart_program(self):
         '''
         This method restarts the game script
         '''
-        python = sys.executable
-        os.execl(python, python, *sys.argv)
-        pass
+        try:
+            subprocess.Popen(["python", "game.py"])
+        except:
+            subprocess.Popen(["python3", "game.py"])
+        exit()
 
-    def popupwindow(self, msg):
-        """
-        Pop up window if game is over
-    
-        :param msg: player name
-        """
-        answer = tkMessageBox.askquestion("Game Over", msg + " Would you like to play again?")
-        if answer == "yes":
-            self.restart_program()
-        elif answer == "no":
-            quit()
+    def get_players(self):
+        player_list = []
+        player1 = Player(name="player 1", model=self.model, id=1)
+        player2 = Player(name="player 2", model=self.model, id=2)
+        player_list.append(player1)
+        player_list.append(player2)
+        return player_list
+
+    def get_turn(self):
+        return self.turn_label_info
+
+    def get_info(self):
+        return self.info
+
+    def add_buttons(self, all_buttons):
+        return self.model.every_button.append(all_buttons)
+
+    def disable_buttons(self, root):
+        for widget in root.winfo_children():
+            if type(widget) == type(Button()) and widget['text'] != "Restart game":
+                widget.configure(state="disabled")
