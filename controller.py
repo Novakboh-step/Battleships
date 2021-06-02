@@ -69,8 +69,8 @@ class Controller:
 
     def get_players(self):
         player_list = []
-        player1 = Player(name="player 1", model=self.model, id=1)
-        player2 = Player(name="player 2", model=self.model, id=2)
+        player1 = Player(name="player 1", id=1)
+        player2 = Player(name="player 2", id=2)
         player_list.append(player1)
         player_list.append(player2)
         return player_list

@@ -95,7 +95,7 @@ class Player(Model):
     :param name: Name string
     :param id: Player id int
     """
-    def __init__(self, model, name, id) -> None:
+    def __init__(self, name, id) -> None:
         super()
         self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
 
