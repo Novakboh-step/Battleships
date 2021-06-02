@@ -7,8 +7,8 @@ class Model:
     Model object that stores the values of the buttons in the field
     """
     def __init__(self):
-        self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
         self.every_button = []
+        pass
 
     def place_all_ships(self,board):
         """
@@ -87,7 +87,7 @@ class Model:
 
 
     
-class Player():
+class Player(Model):
     """
     Player object that stores information about each player
 
@@ -96,10 +96,13 @@ class Player():
     :param id: Player id int
     """
     def __init__(self, model, name, id) -> None:
-        self.board = model.player_board()
+        super()
+        self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
+
+        self.board = self.player_board()
         self.name = name
         self.hits = 0
-        model.place_all_ships(self.board)
+        self.place_all_ships(self.board)
         self.id = id
         self.score = StringVar()
         self.score.set(f"Score: {self.hits}")
