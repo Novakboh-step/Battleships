@@ -10,7 +10,7 @@ class Controller:
 
     :param win_counter : Decides number of hits to victory
     """
-    def __init__(self, win_counter : int = 3):
+    def __init__(self, win_counter : int = 20):
         self.turn = random.randint(1,2)
         self.win_counter = win_counter
         self.turn_label_info = StringVar()
@@ -29,6 +29,7 @@ class Controller:
         :param rival: Rival player
         :param all_buttons: all buttons of the rival player's board
         :param player: Current player
+        :param root: root Tk object
         """
 
         #In case the player that clicks is out of turn
@@ -68,6 +69,11 @@ class Controller:
         exit()
 
     def get_players(self):
+        """
+        Creats player objects
+
+        Returns list of player objects
+        """
         player_list = []
         player1 = Player(name="player 1", id=1)
         player2 = Player(name="player 2", id=2)
@@ -76,15 +82,31 @@ class Controller:
         return player_list
 
     def get_turn(self):
+        """
+        Get controller turn value
+        """
         return self.turn_label_info
 
     def get_info(self):
+        """
+        Get controller indicative info on game
+        """
         return self.info
 
     def add_buttons(self, all_buttons):
-        return self.model.every_button.append(all_buttons)
+        """
+        Get buttons from view and append them to model
+
+        :param: all_buttons: All player buttons from 2d array
+        """
+        self.model.every_button.append(all_buttons)
 
     def disable_buttons(self, root):
+        """
+        Disable all buttons but the restart button once game is done.
+
+        :param: root: root Tk object
+        """
         for widget in root.winfo_children():
             if type(widget) == type(Button()) and widget['text'] != "Restart game":
                 widget.configure(state="disabled")

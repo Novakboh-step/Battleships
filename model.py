@@ -91,11 +91,10 @@ class Player(Model):
     """
     Player object that stores information about each player
 
-    :param model: associated model
     :param name: Name string
     :param id: Player id int
     """
-    def __init__(self, name, id) -> None:
+    def __init__(self, name, id):
         super()
         self.ships = {"Aircraft Carrier": 4, "Battleship": 3, "Submarine": 2, "Destroyer": 1}
 

@@ -6,6 +6,9 @@ from functools import partial
 
 
 class View:
+    """
+    View object which creates the user interface
+    """
     def __init__(self):
         self.root = Tk()
         self.root.wm_title("BATTLESHIPS")
