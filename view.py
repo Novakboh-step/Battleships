@@ -45,9 +45,11 @@ class View:
     
         for _ in range(10):
             Label(self.root, text="   ", bg="gray19").grid(row=_, column=0)
-        Label(self.root, text=f"Get {self.controller.win_counter} hits to win", font=self.font_big, fg="white", bg="gray19").grid(row=3, column=1)
-        Label(self.root, textvariable=self.controller.get_turn(), font=self.font_big, fg="white", bg="gray19").grid(row=5, column=1)
-        Label(self.root, textvariable=self.controller.get_info(), font=self.font_big, fg="white", bg="gray19", width=25).grid(row=7, column=1)
+        Label(self.root, text=f"Get {self.controller.win_counter} hits to win", font=self.font_big, fg="white", bg="gray19").grid(row=1, column=1)
+        Label(self.root, textvariable=self.controller.get_turn(), font=self.font_big, fg="white", bg="gray19").grid(row=2, column=1)
+        listbox = Listbox(selectmode=EXTENDED, height=15, width=30)
+        listbox.grid(row=3, column=1, rowspan=6)
+        self.controller.set_listbox(listbox)
         cmd = partial(self.controller.restart_program)
         Button(self.root, text="Restart game", font=self.font_big, fg="white", bg="gray19", command=cmd).grid(row=9, column=1)
     

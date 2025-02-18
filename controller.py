@@ -16,9 +16,12 @@ class Controller:
         self.turn_label_info = StringVar()
         self.turn_label_info.set(f"Player turn: {self.turn}")
         self.info = StringVar()
+        self.clear_log()
         self.info.set(f"Game begins!")
         self.model = Model()
 
+    def set_listbox(self, listbox):
+        self.listbox = listbox
 
     def hit_or_miss(self, a, b, rival, all_buttons, player, root):
         """
@@ -35,6 +38,7 @@ class Controller:
         #In case the player that clicks is out of turn
         if player.id != self.turn:
             self.info.set(f"Wait for your turn, {player.name}")
+            self.log()
             return
 
         if rival.board[a + 1][b + 1] == ': ':
@@ -52,11 +56,22 @@ class Controller:
             all_buttons[a][b].configure(text="O", fg="White", activeforeground="white", state="disabled")
             self.turn = rival.id
             self.turn_label_info.set(f"Player turn: {self.turn}")
+        self.log()
 
         if player.hits == self.win_counter:
             # if current player got a number of hits that equals to the win_counter he won
             self.info.set(f"Game over, {player.name} won!")
             self.disable_buttons(root)
+            self.log()
+
+    def log(self):
+        with open("log.txt", "a") as fileHandler:
+            fileHandler.writelines(f"{self.info.get()}\n")
+            self.listbox.insert(END, self.info.get())
+
+    def clear_log(self):
+        with open("log.txt", "w") as fileHandler:
+            fileHandler.write("")
 
     def restart_program(self):
         '''
